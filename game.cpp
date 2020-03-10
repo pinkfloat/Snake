@@ -15,6 +15,8 @@ Game::Game(){
 }
 
 Game::~Game(){
+	delete(apple);
+	delete(player);
 	IMG_Quit();
 	SDL_Quit();
 	printf("Game cleaned!\n");
@@ -22,6 +24,10 @@ Game::~Game(){
 
 SnakeHead* Game::initializePlayer(){
 	player = new SnakeHead(14, 12, Direction::RIGHT, window);
+	SnakePart* part1 = new SnakePart(13, 12, Direction::LEFT, window);
+	SnakePart* part2 = new SnakePart(12, 12, Direction::LEFT, window);
+	player->addSnakePart(part1);
+	player->addSnakePart(part2);
 	return player;
 }
 
@@ -41,5 +47,6 @@ void Game::update(){
 		actualObj->updatePosition();
 	}
 	this->player->moveForward();
+	this->player->letPartsFollow();
 	this->player->getImageByDirection();
 }

@@ -7,7 +7,8 @@ GameObject::GameObject(int x, int y, Window* window)
 {
 	imagePosition = TApple;
 	updatePosition();
-	window->addGameObject( this );
+	if (window)
+		window->addGameObject( this );
 }
 
 GameObject::~GameObject(){
@@ -17,14 +18,25 @@ void GameObject::updatePosition(){
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }
 
+void GameObject::followElement(GameObject* previousElement){
+	if ( previousElement->x < this->x)
+		--x;
+	else if ( previousElement->x > this->x)
+		++x;
+	else if ( previousElement->y < this->y)
+		--y;
+	else if ( previousElement->y > this->y)
+		++y;
+}
 
-
-SnakePart::SnakePart(int partX, int partY, Direction newDir, Direction oldDir, Window* window)
-: GameObject ( partX, partY, window ), newDir(newDir), oldDir(oldDir)
+SnakePart::SnakePart(int partX, int partY, Direction newDir, Window* window)
+: GameObject ( partX, partY, window ), newDir(newDir), oldDir(newDir)
 {} 
 
 SnakePart::~SnakePart(){
 }
+
+
 
 void SnakePart::getImageByDirection(){
 	switch(newDir){
@@ -34,10 +46,13 @@ void SnakePart::getImageByDirection(){
 }
 
 SnakeHead::SnakeHead(int headX, int headY, Direction newDir, Window* window)
-: GameObject ( headX, headY, window ), newDir(newDir)
+: GameObject ( headX, headY, window), newDir(newDir), oldDir(newDir)
 {}
 
 SnakeHead::~SnakeHead(){
+	for ( auto actualPart : Parts){
+		delete(actualPart);
+	}
 }
 
 void SnakeHead::getImageByDirection(){
@@ -90,5 +105,35 @@ void SnakeHead::moveForward(){
 		case Direction::RIGHT:	this->x += 1;		break;
 		case Direction::DOWN:	this->y += 1;		break;
 		case Direction::LEFT:	this->x -= 1;		break;
+	}
+}
+
+void SnakeHead::addSnakePart( SnakePart* newPart){
+	this->Parts.push_back(newPart);
+}
+
+void SnakeHead::letPartsFollow(){
+	int i = 0;
+	Direction oldDirFromLastPart;
+	SnakePart* previousElement = NULL;
+
+	for( auto actualPart : Parts ){
+		if ( i == 0){
+			actualPart->newDir = this->oldDir;
+			oldDirFromLastPart = actualPart->oldDir;
+			this->oldDir = this->newDir;
+
+			actualPart->followElement(this);
+		}
+
+		else{
+        	actualPart->newDir = oldDirFromLastPart;
+			oldDirFromLastPart = actualPart->oldDir;
+			actualPart->oldDir = actualPart->newDir;
+
+			actualPart->followElement(previousElement);
+		}
+		previousElement = actualPart;
+		i++;
 	}
 }
