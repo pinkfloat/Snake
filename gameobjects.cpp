@@ -42,10 +42,10 @@ bool SnakeHead::getKeyInput(){
 		this->x -= 1;
 	}
 	if (keystate[ SDL_SCANCODE_S ] ){
-		this->y += 5;
+		this->y += 1;
 	}
 	if (keystate[ SDL_SCANCODE_D ] ){
-		this->x += 5;
+		this->x += 1;
 	}
 
 	//Spieler moechte Spiel verlassen

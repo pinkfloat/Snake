@@ -46,5 +46,4 @@ void Window::draw(){
 	}
 
 	SDL_RenderPresent(renderer);							//Gezeichnetes auf Screen bringen
-	SDL_Delay(20);											//20ms warten
 }
