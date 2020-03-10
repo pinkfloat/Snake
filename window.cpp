@@ -38,8 +38,12 @@ void Window::addGameObject( GameObject* newGameObject ){
 }
 
 void Window::draw(){
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);	//Weiß
+	//Spielfeld mit Umrandung zeichnen
+    SDL_SetRenderDrawColor(renderer, 0x1F, 0x1F, 0, 255);	//Farbe
 	SDL_RenderClear(renderer);								//Bild  mit letzter Farbe überschreiben
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);	//Weiß
+	SDL_Rect mitte = {64, 64, 21*64, 13*64};
+	SDL_RenderFillRect(renderer, &mitte);
 
 	for( auto actualObj : this->GameObjectList ){
     	SDL_RenderCopy(renderer, snakeBMP, &actualObj->imagePosition, &actualObj->levelPosition);

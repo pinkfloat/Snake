@@ -2,9 +2,10 @@
 #include "window.hpp"
 #include "image.hpp"
 
-GameObject::GameObject(int x, int y, SDL_Rect imgPart, Window* window)
-: x(x), y(y), imagePosition(imgPart)
+GameObject::GameObject(int x, int y, Window* window)
+: x(x), y(y)
 {
+	imagePosition = TApple;
 	updatePosition();
 	window->addGameObject( this );
 }
@@ -16,18 +17,37 @@ void GameObject::updatePosition(){
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }
 
-SnakePart::SnakePart(int partX, int partY, SDL_Rect imgPart, Window* window)
-: GameObject ( partX, partY, imgPart, window )
+
+
+SnakePart::SnakePart(int partX, int partY, Direction newDir, Direction oldDir, Window* window)
+: GameObject ( partX, partY, window ), newDir(newDir), oldDir(oldDir)
 {} 
 
 SnakePart::~SnakePart(){
 }
 
-SnakeHead::SnakeHead(int headX, int headY, SDL_Rect imgPart, Window* window)
-: SnakePart ( headX, headY, imgPart, window )
+void SnakePart::getImageByDirection(){
+	switch(newDir){
+		default:
+					imagePosition = TApple;	break;
+	}
+}
+
+SnakeHead::SnakeHead(int headX, int headY, Direction newDir, Window* window)
+: GameObject ( headX, headY, window ), newDir(newDir)
 {}
 
 SnakeHead::~SnakeHead(){
+}
+
+void SnakeHead::getImageByDirection(){
+	switch (newDir){
+			case Direction::UP: 	imagePosition = THeadUp; 	break;
+			case Direction::RIGHT: 	imagePosition = THeadRight; break;
+			case Direction::DOWN:	imagePosition = THeadDown; 	break;
+			case Direction::LEFT: 	imagePosition = THeadLeft;	break;
+			default:				imagePosition = TApple; 	break;
+	}
 }
 
 bool SnakeHead::getKeyInput(){
@@ -35,17 +55,17 @@ bool SnakeHead::getKeyInput(){
 	const uint8_t* keystate = SDL_GetKeyboardState(NULL);
 
 	//Bewegungssteuerung Spieler
-	if (keystate[ SDL_SCANCODE_W ] ){
-		this->y -= 1;
+	if (keystate[ SDL_SCANCODE_W ] && newDir != Direction::DOWN){
+		newDir = Direction::UP;
 	}
-	if (keystate[ SDL_SCANCODE_A ] ){
-		this->x -= 1;
+	if (keystate[ SDL_SCANCODE_A ] && newDir != Direction::RIGHT){
+		newDir = Direction::LEFT;
 	}
-	if (keystate[ SDL_SCANCODE_S ] ){
-		this->y += 1;
+	if (keystate[ SDL_SCANCODE_S ] && newDir != Direction::UP){
+		newDir = Direction::DOWN;
 	}
-	if (keystate[ SDL_SCANCODE_D ] ){
-		this->x += 1;
+	if (keystate[ SDL_SCANCODE_D ] && newDir != Direction::LEFT){
+		newDir = Direction::RIGHT;
 	}
 
 	//Spieler moechte Spiel verlassen
@@ -65,5 +85,10 @@ bool SnakeHead::getKeyInput(){
 }
 
 void SnakeHead::moveForward(){
-
+	switch(newDir){
+		case Direction::UP:		this->y -= 1;		break;
+		case Direction::RIGHT:	this->x += 1;		break;
+		case Direction::DOWN:	this->y += 1;		break;
+		case Direction::LEFT:	this->x -= 1;		break;
+	}
 }

@@ -5,6 +5,11 @@
 
 class Window;
 
+//Blickrichtung der Schlange
+enum class Direction {
+	UP, RIGHT, DOWN, LEFT
+};
+
 class GameObject {
 
 	public:
@@ -13,35 +18,36 @@ class GameObject {
 		SDL_Rect levelPosition;
 		SDL_Rect imagePosition;
 
-		GameObject(int x, int y, SDL_Rect imgPart, Window* window);
+
+		GameObject(int x, int y, Window* window);
 		~GameObject();
 		
 		inline int calculatePixelPosition( int tile ) { return tile * 64; }
 		void updatePosition();
 };
 
-//Blickrichtung der Schlange
-enum class Direction {
-	UP, RIGHT, DOWN, LEFT
-};
-
 class SnakePart : public GameObject {
 	public:
 		
-		Direction dir;
-
-		SnakePart(int partX, int partY, SDL_Rect imgPart, Window* window);
+		Direction newDir, oldDir;
+		SnakePart(int partX, int partY, Direction newDir, Direction oldDir, Window* window);
 		~SnakePart();
+
+		void getImageByDirection ();
 };
 
-class SnakeHead : public SnakePart {
+class SnakeHead : public GameObject {
 
 	std::vector<SnakePart> Parts;
 
 	public:
-		SnakeHead(int headX, int headY, SDL_Rect imgPart, Window* window);
+
+		Direction newDir;
+
+		SnakeHead(int headX, int headY, Direction newDir, Window* window);
 		~SnakeHead();
 
+		void getImageByDirection ();
 		bool getKeyInput();
 		void moveForward();
 };

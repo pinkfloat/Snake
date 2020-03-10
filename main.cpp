@@ -1,17 +1,21 @@
 #include "game.hpp"
 
-#define FRAMERATE 100
+#define FRAMERATE 180
 
 int main ( ) {
 
 	Game game;
 	game.initializeGame();
 
-	while ( game.isRunning ) {
+	for ( ; ; ) {
 
 		Uint32 ticks_start = SDL_GetTicks();
 
 		game.isRunning = game.player->getKeyInput();
+		
+		if ( !game.isRunning )
+			break;
+		
 		game.update();
 		game.window->draw();
 

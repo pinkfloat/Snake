@@ -21,13 +21,13 @@ Game::~Game(){
 }
 
 SnakeHead* Game::initializePlayer(){
-	player = new SnakeHead(14,12,THeadRight,window);
+	player = new SnakeHead(14, 12, Direction::RIGHT, window);
 	return player;
 }
 
 GameObject* Game::initializeApple(){
 //ToDo: Random-File erstellen -> Funktion hier einfügen
-	apple = new GameObject(6,6,TApple,window);
+	apple = new GameObject(6,6,window);
 	return apple;
 }
 
@@ -40,4 +40,6 @@ void Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
+	this->player->moveForward();
+	this->player->getImageByDirection();
 }
