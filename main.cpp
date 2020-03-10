@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-#define FRAMERATE 180
+#define FRAMERATE 150
 
 int main ( ) {
 

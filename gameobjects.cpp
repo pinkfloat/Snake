@@ -18,6 +18,8 @@ void GameObject::updatePosition(){
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }
 
+/*____SNAKE_PART____*/
+
 SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
 : GameObject ( partX, partY, window ), dir(dir)
 {} 
@@ -25,14 +27,14 @@ SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
 SnakePart::~SnakePart(){
 }
 
-
-
 void SnakePart::getImageByDirection(){
 	switch(dir){
 		default:
 					imagePosition = TApple;	break;
 	}
 }
+
+/*____SNAKE_HEAD____*/
 
 SnakeHead::SnakeHead(int headX, int headY, Direction dir, Window* window)
 : GameObject ( headX, headY, window), dir(dir)
