@@ -1,59 +1,52 @@
 #include "gameobjects.hpp"
 #include "window.hpp"
+#include "image.hpp"
 
-GameObject::GameObject(int pos_x, int pos_y, int width, int height, const char* img_path, Window* window)
-: img_path(img_path)
+GameObject::GameObject(int x, int y, SDL_Rect imgPart, Window* window)
+: x(x), y(y), imagePosition(imgPart)
 {
-	this->myFigure = { pos_x, pos_y, width, height };
+	updatePosition();
 	window->addGameObject( this );
-	window->addTextureToObject( this );
 }
 
 GameObject::~GameObject(){
 }
 
+void GameObject::updatePosition(){
+	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
+}
 
+SnakePart::SnakePart(int partX, int partY, SDL_Rect imgPart, Window* window)
+: GameObject ( partX, partY, imgPart, window )
+{} 
 
-Player::Player(int pos_x, int pos_y, int width, int height, const char* img_path, Window* window)
-: GameObject ( pos_x, pos_y, width, height, img_path, window)
+SnakePart::~SnakePart(){
+}
+
+SnakeHead::SnakeHead(int headX, int headY, SDL_Rect imgPart, Window* window)
+: SnakePart ( headX, headY, imgPart, window )
 {}
 
-Player::~Player(){}
+SnakeHead::~SnakeHead(){
+}
 
-bool Player::getKeyInput(){
+bool SnakeHead::getKeyInput(){
 	bool isRunning = true;
 	const uint8_t* keystate = SDL_GetKeyboardState(NULL);
 
 	//Bewegungssteuerung Spieler
-
 	if (keystate[ SDL_SCANCODE_W ] ){
-		this->myFigure.y -= 5;
+		this->y -= 1;
 	}
 	if (keystate[ SDL_SCANCODE_A ] ){
-		this->myFigure.x -= 5;
+		this->x -= 1;
 	}
 	if (keystate[ SDL_SCANCODE_S ] ){
-		this->myFigure.y += 5;
+		this->y += 5;
 	}
 	if (keystate[ SDL_SCANCODE_D ] ){
-		this->myFigure.x += 5;
+		this->x += 5;
 	}
-
-	//Für 2. Spieler bzw. alternative Tasten
-	/*
-	if (keystate[ SDL_SCANCODE_UP ] ){
-		this->myFigure.y -= 10;
-	}
-	if (keystate[ SDL_SCANCODE_LEFT ] ){
-		this->myFigure.x -= 10;
-	}
-	if (keystate[ SDL_SCANCODE_DOWN ] ){
-		this->myFigure.y += 10;
-	}
-	if (keystate[ SDL_SCANCODE_RIGHT ] ){
-		this->myFigure.x += 10;
-	}
-	*/
 
 	//Spieler moechte Spiel verlassen
 	SDL_Event event;
@@ -69,4 +62,8 @@ bool Player::getKeyInput(){
 		default:	break;
 	}
 	return isRunning;
+}
+
+void SnakeHead::moveForward(){
+
 }

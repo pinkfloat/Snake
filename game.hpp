@@ -1,5 +1,8 @@
 ﻿#pragma once
+#include "gameobjects.hpp"
 #include "window.hpp"
+#include "image.hpp"
+#include "level.hpp"
 
 class Game {
 
@@ -9,6 +12,15 @@ class Game {
 		
 		bool isRunning;
 		Window* window;
+
+		Level level;
+
+		SnakeHead* player;
+		GameObject* apple;
+
+		SnakeHead* initializePlayer();
+		GameObject* initializeApple();
+		void initializeGame();
 
 		void update(); //Spiellogik voranbringen, alle non-Player game-objekte updaten
 };

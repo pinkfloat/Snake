@@ -1,15 +1,13 @@
 #include "game.hpp"
-#include "gameobjects.hpp"
 
 int main ( ) {
 
 	Game game;
-	Player player_one(220, 140, 200, 200, "img/MrCubeHead_green_1.png", game.window);
-
+	game.initializeGame();
 
 	while ( game.isRunning ) {
 
-		game.isRunning = player_one.getKeyInput();
+		game.isRunning = game.player->getKeyInput();
 		game.update();
 		game.window->draw();
 	}

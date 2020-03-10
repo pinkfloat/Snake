@@ -12,11 +12,11 @@ class Window {
 
 		SDL_Window* window;
 		SDL_Renderer* renderer;
+		SDL_Surface* image;
+		SDL_Texture* snakeBMP;
 
 		void addGameObject( GameObject* newGameObject );		
-		void addTextureToObject( GameObject* newGameObject );
 		void draw();
 
-	private:
 		std::vector<GameObject*> GameObjectList;
 };
