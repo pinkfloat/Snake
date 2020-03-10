@@ -18,19 +18,8 @@ void GameObject::updatePosition(){
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }
 
-void GameObject::followElement(GameObject* previousElement){
-	if ( previousElement->x < this->x)
-		--x;
-	else if ( previousElement->x > this->x)
-		++x;
-	else if ( previousElement->y < this->y)
-		--y;
-	else if ( previousElement->y > this->y)
-		++y;
-}
-
-SnakePart::SnakePart(int partX, int partY, Direction newDir, Window* window)
-: GameObject ( partX, partY, window ), newDir(newDir), oldDir(newDir)
+SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
+: GameObject ( partX, partY, window ), dir(dir)
 {} 
 
 SnakePart::~SnakePart(){
@@ -39,14 +28,14 @@ SnakePart::~SnakePart(){
 
 
 void SnakePart::getImageByDirection(){
-	switch(newDir){
+	switch(dir){
 		default:
 					imagePosition = TApple;	break;
 	}
 }
 
-SnakeHead::SnakeHead(int headX, int headY, Direction newDir, Window* window)
-: GameObject ( headX, headY, window), newDir(newDir), oldDir(newDir)
+SnakeHead::SnakeHead(int headX, int headY, Direction dir, Window* window)
+: GameObject ( headX, headY, window), dir(dir)
 {}
 
 SnakeHead::~SnakeHead(){
@@ -56,7 +45,7 @@ SnakeHead::~SnakeHead(){
 }
 
 void SnakeHead::getImageByDirection(){
-	switch (newDir){
+	switch (dir){
 			case Direction::UP: 	imagePosition = THeadUp; 	break;
 			case Direction::RIGHT: 	imagePosition = THeadRight; break;
 			case Direction::DOWN:	imagePosition = THeadDown; 	break;
@@ -70,17 +59,17 @@ bool SnakeHead::getKeyInput(){
 	const uint8_t* keystate = SDL_GetKeyboardState(NULL);
 
 	//Bewegungssteuerung Spieler
-	if (keystate[ SDL_SCANCODE_W ] && newDir != Direction::DOWN){
-		newDir = Direction::UP;
+	if (keystate[ SDL_SCANCODE_W ] && dir != Direction::DOWN){
+		dir = Direction::UP;
 	}
-	if (keystate[ SDL_SCANCODE_A ] && newDir != Direction::RIGHT){
-		newDir = Direction::LEFT;
+	if (keystate[ SDL_SCANCODE_A ] && dir != Direction::RIGHT){
+		dir = Direction::LEFT;
 	}
-	if (keystate[ SDL_SCANCODE_S ] && newDir != Direction::UP){
-		newDir = Direction::DOWN;
+	if (keystate[ SDL_SCANCODE_S ] && dir != Direction::UP){
+		dir = Direction::DOWN;
 	}
-	if (keystate[ SDL_SCANCODE_D ] && newDir != Direction::LEFT){
-		newDir = Direction::RIGHT;
+	if (keystate[ SDL_SCANCODE_D ] && dir != Direction::LEFT){
+		dir = Direction::RIGHT;
 	}
 
 	//Spieler moechte Spiel verlassen
@@ -100,7 +89,7 @@ bool SnakeHead::getKeyInput(){
 }
 
 void SnakeHead::moveForward(){
-	switch(newDir){
+	switch(dir){
 		case Direction::UP:		this->y -= 1;		break;
 		case Direction::RIGHT:	this->x += 1;		break;
 		case Direction::DOWN:	this->y += 1;		break;
@@ -112,28 +101,22 @@ void SnakeHead::addSnakePart( SnakePart* newPart){
 	this->Parts.push_back(newPart);
 }
 
-void SnakeHead::letPartsFollow(){
-	int i = 0;
-	Direction oldDirFromLastPart;
-	SnakePart* previousElement = NULL;
-
-	for( auto actualPart : Parts ){
-		if ( i == 0){
-			actualPart->newDir = this->oldDir;
-			oldDirFromLastPart = actualPart->oldDir;
-			this->oldDir = this->newDir;
-
-			actualPart->followElement(this);
+void SnakeHead::letPartsFollow( int old_y, int old_x, Direction old_dir){
+	for ( int i = Parts.size()-1; i >= 0; i--){
+			//Hinter vorangehendem Teil herlaufen
+			int j = i-1;
+			if (i > 0){
+				Parts[i]->y = Parts[j]->y;
+				Parts[i]->x = Parts[j]->x;
+				Parts[i]->dir = Parts[j]->dir;
+			
 		}
-
-		else{
-        	actualPart->newDir = oldDirFromLastPart;
-			oldDirFromLastPart = actualPart->oldDir;
-			actualPart->oldDir = actualPart->newDir;
-
-			actualPart->followElement(previousElement);
+		//Hinter dem Kopf herlaufen
+		if (i == 0)
+		{
+			Parts[i]->y = old_y;
+			Parts[i]->x = old_x;
+			Parts[i]->dir = old_dir;
 		}
-		previousElement = actualPart;
-		i++;
 	}
 }

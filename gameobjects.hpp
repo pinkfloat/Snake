@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <list>
+#include <vector>
 
 class Window;
 
@@ -24,15 +24,14 @@ class GameObject {
 		
 		inline int calculatePixelPosition( int tile ) { return tile * 64; }
 		void updatePosition();
-		void followElement( GameObject* previousElement);
 		
 };
 
 class SnakePart : public GameObject {
 	public:
 		
-		Direction newDir, oldDir;
-		SnakePart(int partX, int partY, Direction newDir, Window* window);
+		Direction dir;
+		SnakePart(int partX, int partY, Direction dir, Window* window);
 		~SnakePart();
 
 		void getImageByDirection ();
@@ -40,18 +39,18 @@ class SnakePart : public GameObject {
 
 class SnakeHead : public GameObject {
 
-	std::list<SnakePart*> Parts;
+	std::vector<SnakePart*> Parts;
 
 	public:
 
-		Direction newDir, oldDir;
+		Direction dir;
 
-		SnakeHead(int headX, int headY, Direction newDir, Window* window);
+		SnakeHead(int headX, int headY, Direction dir, Window* window);
 		~SnakeHead();
 
 		void getImageByDirection ();
 		bool getKeyInput();
 		void moveForward();
 		void addSnakePart ( SnakePart* newPart );
-		void letPartsFollow();
+		void letPartsFollow(int old_y, int old_x, Direction old_dir);
 };

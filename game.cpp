@@ -46,7 +46,10 @@ void Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
+	int old_x = player->x;
+	int old_y = player->y;
+	Direction old_dir = player->dir;
 	this->player->moveForward();
-	this->player->letPartsFollow();
+	this->player->letPartsFollow(old_y, old_x, old_dir);
 	this->player->getImageByDirection();
 }
