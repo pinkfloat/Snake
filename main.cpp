@@ -11,12 +11,16 @@ int main ( ) {
 
 		Uint32 ticks_start = SDL_GetTicks();
 
-		game.isRunning = game.player->getKeyInput();
+		game.isRunning = game.update();
 		
 		if ( !game.isRunning )
 			break;
 		
-		game.update();
+		game.isRunning = game.player->getKeyInput();
+
+		if ( !game.isRunning )
+			break;
+			
 		game.window->draw();
 
 		Uint32 time = SDL_GetTicks() - ticks_start;

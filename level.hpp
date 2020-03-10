@@ -2,10 +2,18 @@
 #define level_width 24
 #define level_height 15
 
+#include "gameobjects.hpp"
+
+enum class fieldCondition {
+	EMPTY, APPLE, SNAKE, WALL
+};
+
 class Level {
 
     public:
-        int size [level_width][level_height];
+        fieldCondition field [level_width][level_height];
         Level();
-        ~Level(); 
+        ~Level();
+
+        bool checkCollision(SnakeHead* player); 
 };

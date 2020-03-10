@@ -28,12 +28,18 @@ SnakeHead* Game::initializePlayer(){
 	SnakePart* part2 = new SnakePart(12, 12, Direction::LEFT, window);
 	player->addSnakePart(part1);
 	player->addSnakePart(part2);
+
+	level.field[14][12] = fieldCondition::SNAKE;
+	level.field[13][12] = fieldCondition::SNAKE;
+	level.field[12][12] = fieldCondition::SNAKE;
+
 	return player;
 }
 
 GameObject* Game::initializeApple(){
 //ToDo: Random-File erstellen -> Funktion hier einfügen
 	apple = new GameObject(6,6,window);
+	level.field[6][6] = fieldCondition::APPLE;
 	return apple;
 }
 
@@ -42,14 +48,28 @@ void Game::initializeGame(){
 	initializeApple();
 }
 
-void Game::update(){
+void Game::updateLevelMap(){
+	for ( int x = 0; x < level_width-1; x++){
+		for ( int y = 0; y < level_height-1; y++){
+			level.field[x][y] = fieldCondition::EMPTY;
+		}
+	}
+	for ( auto SnakePart : player->Parts ){
+			level.field[SnakePart->x][SnakePart->y] = fieldCondition::SNAKE;
+	}
+	level.field[apple->x][apple->y] = fieldCondition::APPLE;
+}
+
+bool Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
 	int old_x = player->x;
 	int old_y = player->y;
 	Direction old_dir = player->dir;
-	this->player->moveForward();
-	this->player->letPartsFollow(old_y, old_x, old_dir);
-	this->player->getImageByDirection();
+	player->moveForward();
+	player->letPartsFollow(old_y, old_x, old_dir);
+	player->getImageByDirection();
+	updateLevelMap();
+	return level.checkCollision(player);
 }

@@ -22,5 +22,6 @@ class Game {
 		GameObject* initializeApple();
 		void initializeGame();
 
-		void update(); //Spiellogik voranbringen, alle non-Player game-objekte updaten
+		void updateLevelMap();
+		bool update(); //Spiellogik voranbringen, alle non-Player game-objekte updaten
 };

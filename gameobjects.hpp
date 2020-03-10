@@ -39,9 +39,9 @@ class SnakePart : public GameObject {
 
 class SnakeHead : public GameObject {
 
-	std::vector<SnakePart*> Parts;
-
 	public:
+
+		std::vector<SnakePart*> Parts;
 
 		Direction dir;
 
