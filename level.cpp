@@ -22,6 +22,10 @@ Level::~Level(){
 bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window){
 	if ( field [player->x][player->y] == fieldCondition::EMPTY)
 		return true;
+	else if (player->Parts.size() == level_width * level_height-1){
+			printf("Player won, but no one will ever notice...\n");
+		return false;
+	}		
 	else if ( field [player->x][player->y] == fieldCondition::APPLE){
 			//Schlange vergroeßern
 			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
@@ -35,7 +39,7 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 		return false;
 	}
 	else if ( field [player->x][player->y] == fieldCondition::SNAKE){
-		printf("Player ate himself\n");
+			printf("Player ate himself\n");
 		return false;
 	}
 	else {
@@ -48,7 +52,7 @@ void Level::replaceApple( SnakeHead* player, GameObject* apple){
 	//Vermeiden, dass Apfel in der Schlange spawnt:
 	bool spawnInPlayer = false;
 	do{
-		spawnInPlayer = false;
+		spawnInPlayer = false;	
 		std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
 		apple->x = rand() % 21 + 1;
 		apple->y = rand() % 13 + 1;

@@ -68,6 +68,7 @@ bool Game::update(){
 	player->moveForward();
 	player->letPartsFollow();
 	updateLevelMap();
+	//printf("x = %d, y = %d\n", player->x, player->y); //TEST
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}

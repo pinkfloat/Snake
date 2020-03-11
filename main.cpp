@@ -30,5 +30,7 @@ int main ( ) {
 			break;
 	}
 
+	printf("Your apples: %ld\n", game.player->Parts.size()-2);
+
 	return 0;
 }
