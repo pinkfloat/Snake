@@ -34,7 +34,8 @@ class SnakePart : public GameObject {
 		SnakePart(int partX, int partY, Direction dir, Window* window);
 		~SnakePart();
 
-		void getImageByDirection ();
+		void getBodyImage ();
+		void getTailImage ();
 };
 
 class SnakeHead : public GameObject {
@@ -43,14 +44,15 @@ class SnakeHead : public GameObject {
 
 		std::vector<SnakePart*> Parts;
 
-		Direction dir;
+		int oldX, oldY;
+		Direction dir, oldDir;
 
 		SnakeHead(int headX, int headY, Direction dir, Window* window);
 		~SnakeHead();
 
-		void getImageByDirection ();
+		void getHeadImage();
 		bool getKeyInput();
 		void moveForward();
 		void addSnakePart ( SnakePart* newPart );
-		void letPartsFollow(int old_y, int old_x, Direction old_dir);
+		void letPartsFollow();
 };

@@ -27,7 +27,7 @@ SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
 SnakePart::~SnakePart(){
 }
 
-void SnakePart::getImageByDirection(){
+void SnakePart::getBodyImage(){
 	switch(dir){
 		case Direction::UP:		imagePosition = TUpDown;	break;
 		case Direction::RIGHT:	imagePosition = TLeftRight;	break;
@@ -37,10 +37,20 @@ void SnakePart::getImageByDirection(){
 	}
 }
 
+void SnakePart::getTailImage(){
+	switch(dir){
+		case Direction::UP:		imagePosition = TTailUp;	break;
+		case Direction::RIGHT:	imagePosition = TTailRight;	break;
+		case Direction::DOWN:	imagePosition = TTailDown;	break;
+		case Direction::LEFT:	imagePosition = TTailLeft;	break;
+		default:				imagePosition = TApple;		break;
+	}
+}
+
 /*____SNAKE_HEAD____*/
 
 SnakeHead::SnakeHead(int headX, int headY, Direction dir, Window* window)
-: GameObject ( headX, headY, window), dir(dir)
+: GameObject ( headX, headY, window), dir(dir), oldDir(dir)
 {}
 
 SnakeHead::~SnakeHead(){
@@ -49,7 +59,7 @@ SnakeHead::~SnakeHead(){
 	}
 }
 
-void SnakeHead::getImageByDirection(){
+void SnakeHead::getHeadImage(){
 	switch (dir){
 			case Direction::UP: 	imagePosition = THeadUp; 	break;
 			case Direction::RIGHT: 	imagePosition = THeadRight; break;
@@ -97,13 +107,14 @@ void SnakeHead::moveForward(){
 		case Direction::DOWN:	this->y += 1;		break;
 		case Direction::LEFT:	this->x -= 1;		break;
 	}
+	getHeadImage();
 }
 
 void SnakeHead::addSnakePart( SnakePart* newPart){
 	this->Parts.push_back(newPart);
 }
 
-void SnakeHead::letPartsFollow( int old_y, int old_x, Direction old_dir){
+void SnakeHead::letPartsFollow(){
 	for ( int i = Parts.size()-1; i >= 0; i--){
 		//Hinter vorangehendem Teil herlaufen
 		int j = i-1;
@@ -111,15 +122,21 @@ void SnakeHead::letPartsFollow( int old_y, int old_x, Direction old_dir){
 			Parts[i]->y = Parts[j]->y;
 			Parts[i]->x = Parts[j]->x;
 			Parts[i]->dir = Parts[j]->dir;
-			
+			//Wenn Tail:
+			if (i == Parts.size()-1){
+				Parts[i]->getTailImage();
+			}
+			else
+				Parts[i]->getBodyImage();
 		}
 		//Hinter dem Kopf herlaufen
 		if (i == 0)
 		{
-			Parts[i]->y = old_y;
-			Parts[i]->x = old_x;
-			Parts[i]->dir = old_dir;
+			Parts[i]->y = oldY;
+			Parts[i]->x = oldX;
+			Parts[i]->dir = oldDir;
+			//Bekommt vermutlich auch noch eigene Funtion:
+			Parts[i]->getBodyImage();
 		}
-		Parts[i]->getImageByDirection();
 	}
 }

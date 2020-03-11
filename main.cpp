@@ -18,15 +18,16 @@ int main ( ) {
 		
 		game.isRunning = game.update();
 		
-		if ( !game.isRunning )
-			break;
-				
+			
 		game.window->draw();
 
 		Uint32 time = SDL_GetTicks() - ticks_start;
 
 		if ( time < FRAMERATE)
 			SDL_Delay(FRAMERATE - time);
+
+		if ( !game.isRunning )
+			break;
 	}
 
 	return 0;

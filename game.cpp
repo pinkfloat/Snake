@@ -62,12 +62,11 @@ void Game::updateLevelMap(){
 }
 
 bool Game::update(){
-	int old_x = player->x;
-	int old_y = player->y;
-	Direction old_dir = player->dir;
+	player->oldX = player->x;
+	player->oldY = player->y;
+	player->oldDir = player->dir;
 	player->moveForward();
-	player->letPartsFollow(old_y, old_x, old_dir);
-	player->getImageByDirection();
+	player->letPartsFollow();
 	updateLevelMap();
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
