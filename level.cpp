@@ -17,13 +17,15 @@ Level::~Level(){
 }
 
 //Beendet Spiel bei Collision mit Wand oder Schlangenkoerper
-bool Level::checkCollision( SnakeHead* player){
+bool Level::checkCollision( SnakeHead* player, Window* window){
 	if ( field [player->x][player->y] == fieldCondition::EMPTY)
 		return true;
 	else if ( field [player->x][player->y] == fieldCondition::APPLE){
-		//Element an Schlange anfuegen, Apfel umplatzieren
-
-		/* code */
+			//Schlange vergroeßern
+			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
+			player->addSnakePart(newPart);
+			//Apfel umplatzieren
+			/* code */
 
 		return true;
 	}

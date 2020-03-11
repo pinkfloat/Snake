@@ -15,5 +15,5 @@ class Level {
         Level();
         ~Level();
 
-        bool checkCollision(SnakeHead* player); 
+        bool checkCollision(SnakeHead* player, Window* window); 
 };
