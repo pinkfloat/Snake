@@ -1,6 +1,6 @@
-#include "level.hpp"
 #include <cstdlib>
 #include <ctime>
+#include "level.hpp"
 
 #define maxRandomLoops 20
 

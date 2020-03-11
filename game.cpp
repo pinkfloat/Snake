@@ -1,6 +1,5 @@
-#include "game.hpp"
-#include "gameobjects.hpp"
 #include <cstdio>
+#include "game.hpp"
 
 Game::Game(){
 	if( (SDL_Init(SDL_INIT_VIDEO) == 0) && (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)) ){

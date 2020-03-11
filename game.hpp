@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "gameobjects.hpp"
+#include "snakehead.hpp"
 #include "window.hpp"
 #include "image.hpp"
 #include "level.hpp"

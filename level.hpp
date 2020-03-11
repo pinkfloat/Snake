@@ -2,7 +2,7 @@
 #define level_width 22
 #define level_height 14
 
-#include "gameobjects.hpp"
+#include "snakehead.hpp"
 
 enum class fieldCondition {
 	EMPTY, APPLE, SNAKE, WALL
