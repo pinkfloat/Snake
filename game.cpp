@@ -71,5 +71,5 @@ bool Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
-	return level.checkCollision(player, window);
+	return level.checkCollision(player, apple, window);
 }

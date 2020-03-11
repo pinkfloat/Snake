@@ -1,4 +1,6 @@
 #include "level.hpp"
+#include <cstdlib>
+#include <ctime>
 
 Level::Level(){
 	for ( int x = 0; x < level_width; x++){
@@ -17,7 +19,7 @@ Level::~Level(){
 }
 
 //Beendet Spiel bei Collision mit Wand oder Schlangenkoerper
-bool Level::checkCollision( SnakeHead* player, Window* window){
+bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window){
 	if ( field [player->x][player->y] == fieldCondition::EMPTY)
 		return true;
 	else if ( field [player->x][player->y] == fieldCondition::APPLE){
@@ -25,8 +27,10 @@ bool Level::checkCollision( SnakeHead* player, Window* window){
 			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
 			player->addSnakePart(newPart);
 			//Apfel umplatzieren
-			/* code */
-
+			std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
+			apple->x = rand() % 21 + 1;
+			apple->y = rand() % 13 + 1;
+			//ToDo: Vermeiden, dass Apfel an Spielerposition spawnt
 		return true;
 	}
 	else
