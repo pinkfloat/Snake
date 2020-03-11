@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#define maxRandomLoops 20
+
 Level::Level(){
 	for ( int x = 0; x < level_width; x++){
 		for ( int y = 0; y < level_height; y++){
@@ -50,7 +52,8 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 
 void Level::replaceApple( SnakeHead* player, GameObject* apple){
 	//Vermeiden, dass Apfel in der Schlange spawnt:
-	bool spawnInPlayer = false;
+	bool spawnInPlayer;
+	int loops;
 	do{
 		spawnInPlayer = false;	
 		std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
@@ -63,7 +66,27 @@ void Level::replaceApple( SnakeHead* player, GameObject* apple){
 			for ( auto actualPart : player->Parts){
 				if ((actualPart->x == apple->x)&&(actualPart->y == apple->y))
 					spawnInPlayer = true;
+					
 			}
 		}
-	} while (spawnInPlayer);
+		loops++;
+	} while (spawnInPlayer && loops < maxRandomLoops);
+
+	//Falls Random zu lange sucht:
+	if (loops >= maxRandomLoops){
+		for ( int x = 0; x < level_width; x++){
+			for ( int y = 0; y < level_height; y++){
+				if (field[x][y] == fieldCondition::EMPTY){
+					apple->x = x;
+					apple->y = y;
+					spawnInPlayer = false;
+					break;
+				}
+			}
+			if(!spawnInPlayer)
+				break;
+		}
+		if(spawnInPlayer)
+			fprintf(stderr, "Couldn't find empty place for an apple\n");
+	}
 }
