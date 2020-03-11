@@ -24,8 +24,8 @@ Game::~Game(){
 
 SnakeHead* Game::initializePlayer(){
 	player = new SnakeHead(14, 12, Direction::RIGHT, window);
-	SnakePart* part1 = new SnakePart(13, 12, Direction::LEFT, window);
-	SnakePart* part2 = new SnakePart(12, 12, Direction::LEFT, window);
+	SnakePart* part1 = new SnakePart(13, 12, Direction::RIGHT, window);
+	SnakePart* part2 = new SnakePart(12, 12, Direction::RIGHT, window);
 	player->addSnakePart(part1);
 	player->addSnakePart(part2);
 

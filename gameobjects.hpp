@@ -30,7 +30,7 @@ class GameObject {
 class SnakePart : public GameObject {
 	public:
 		
-		Direction dir;
+		Direction dir, oldDir;
 		SnakePart(int partX, int partY, Direction dir, Window* window);
 		~SnakePart();
 

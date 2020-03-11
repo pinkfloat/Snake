@@ -21,7 +21,7 @@ void GameObject::updatePosition(){
 /*____SNAKE_PART____*/
 
 SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
-: GameObject ( partX, partY, window ), dir(dir)
+: GameObject ( partX, partY, window ), dir(dir), oldDir(dir)
 {} 
 
 SnakePart::~SnakePart(){
@@ -29,11 +29,39 @@ SnakePart::~SnakePart(){
 
 void SnakePart::getBodyImage(){
 	switch(dir){
-		case Direction::UP:		imagePosition = TUpDown;	break;
-		case Direction::RIGHT:	imagePosition = TLeftRight;	break;
-		case Direction::DOWN:	imagePosition = TUpDown;	break;
-		case Direction::LEFT:	imagePosition = TLeftRight;	break;
-		default: 				imagePosition = TApple;		break;
+		case Direction::UP:		
+			switch(oldDir){
+				case Direction::UP:
+				case Direction::DOWN:	imagePosition = TUpDown; 	break;
+				case Direction::RIGHT:	imagePosition = TUpRight; 	break;
+				case Direction::LEFT:	imagePosition = TUpLeft; 	break;
+			}
+		break;
+		case Direction::RIGHT:
+			switch(oldDir){
+				case Direction::UP:		imagePosition = TUpRight; 	break;
+				case Direction::RIGHT:
+				case Direction::LEFT:	imagePosition = TLeftRight;	break;
+				case Direction::DOWN:	imagePosition = TDownRight;	break;
+			}
+		break;
+		case Direction::DOWN:
+			switch(oldDir){
+				case Direction::UP:
+				case Direction::DOWN:	imagePosition = TUpDown;	break;
+				case Direction::RIGHT:	imagePosition = TDownRight;	break;
+				case Direction::LEFT:	imagePosition = TLeftDown;	break;
+			}
+		break;
+		case Direction::LEFT:
+			switch(oldDir){
+				case Direction::UP:		imagePosition = TUpLeft;	break;
+				case Direction::RIGHT:
+				case Direction::LEFT:	imagePosition = TLeftRight;	break;
+				case Direction::DOWN:	imagePosition = TDownRight;	break;
+			}
+		break;
+		default: 						imagePosition = TApple;		break;
 	}
 }
 
@@ -121,6 +149,7 @@ void SnakeHead::letPartsFollow(){
 		if (i > 0){
 			Parts[i]->y = Parts[j]->y;
 			Parts[i]->x = Parts[j]->x;
+			Parts[i]->oldDir = Parts[i]->dir;
 			Parts[i]->dir = Parts[j]->dir;
 			//Wenn Tail:
 			if (i == Parts.size()-1){
@@ -134,8 +163,8 @@ void SnakeHead::letPartsFollow(){
 		{
 			Parts[i]->y = oldY;
 			Parts[i]->x = oldX;
+			Parts[i]->oldDir = Parts[i]->dir;
 			Parts[i]->dir = oldDir;
-			//Bekommt vermutlich auch noch eigene Funtion:
 			Parts[i]->getBodyImage();
 		}
 	}
