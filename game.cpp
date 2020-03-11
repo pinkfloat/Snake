@@ -38,7 +38,8 @@ SnakeHead* Game::initializePlayer(){
 
 GameObject* Game::initializeApple(){
 //ToDo: Random-File erstellen -> Funktion hier einfügen
-	apple = new GameObject(6,6,window);
+	apple = new GameObject(0,0,window);
+	level.replaceApple(player, apple);
 	level.field[6][6] = fieldCondition::APPLE;
 	return apple;
 }
@@ -49,8 +50,8 @@ void Game::initializeGame(){
 }
 
 void Game::updateLevelMap(){
-	for ( int x = 0; x < level_width-1; x++){
-		for ( int y = 0; y < level_height-1; y++){
+	for ( int x = 1; x < level_width-1; x++){
+		for ( int y = 1; y < level_height-1; y++){
 			level.field[x][y] = fieldCondition::EMPTY;
 		}
 	}
@@ -71,5 +72,6 @@ bool Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
+	printf("x = %d, y = %d\n", player->x, player->y);
 	return level.checkCollision(player, apple, window);
 }

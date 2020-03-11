@@ -1,6 +1,6 @@
 #pragma once
-#define level_width 24
-#define level_height 15
+#define level_width 22
+#define level_height 14
 
 #include "gameobjects.hpp"
 
@@ -15,5 +15,6 @@ class Level {
         Level();
         ~Level();
 
-        bool checkCollision(SnakeHead* player, GameObject* apple, Window* window); 
+        bool checkCollision(SnakeHead* player, GameObject* apple, Window* window);
+        void replaceApple (SnakeHead* player, GameObject* apple);
 };

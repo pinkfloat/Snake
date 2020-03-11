@@ -5,9 +5,9 @@
 Level::Level(){
 	for ( int x = 0; x < level_width; x++){
 		for ( int y = 0; y < level_height; y++){
-			if ( ( x == 0) || ( x == level_width-1) ) //seitliche Spielfeldbegrenzung
+			if ( ( x == 0) || ( x == level_width) ) //seitliche Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
-			else if ( ( y == 0) || ( y == level_height-1) ) //obere und untere Spielfeldbegrenzung
+			else if ( ( y == 0) || ( y == level_height) ) //obere und untere Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
 			else
 				field[x][y] = fieldCondition::EMPTY;
@@ -27,12 +27,16 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
 			player->addSnakePart(newPart);
 			//Apfel umplatzieren
-			std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
-			apple->x = rand() % 21 + 1;
-			apple->y = rand() % 13 + 1;
-			//ToDo: Vermeiden, dass Apfel an Spielerposition spawnt
+		
 		return true;
 	}
 	else
 		return false;
+}
+
+void Level::replaceApple( SnakeHead* player, GameObject* apple){
+	std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
+			apple->x = rand() % 21 + 1;
+			apple->y = rand() % 13 + 1;
+			//ToDo: Vermeiden, dass Apfel an Spielerposition spawnt
 }
