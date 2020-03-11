@@ -58,34 +58,31 @@ void SnakeHead::getImageByDirection(){
 
 bool SnakeHead::getKeyInput(){
 	bool isRunning = true;
-	const uint8_t* keystate = SDL_GetKeyboardState(NULL);
-
-	//Bewegungssteuerung Spieler
-	if (keystate[ SDL_SCANCODE_W ] && dir != Direction::DOWN){
-		dir = Direction::UP;
-	}
-	if (keystate[ SDL_SCANCODE_A ] && dir != Direction::RIGHT){
-		dir = Direction::LEFT;
-	}
-	if (keystate[ SDL_SCANCODE_S ] && dir != Direction::UP){
-		dir = Direction::DOWN;
-	}
-	if (keystate[ SDL_SCANCODE_D ] && dir != Direction::LEFT){
-		dir = Direction::RIGHT;
-	}
-
-	//Spieler moechte Spiel verlassen
 	SDL_Event event;
-	SDL_PollEvent(&event);
+	while (SDL_PollEvent(&event)){
 
-	switch (event.type) {
-		case SDL_QUIT:	isRunning = false;	break;
-		case SDL_KEYDOWN:
-			switch(event.key.keysym.sym) {
-				case SDLK_ESCAPE:	isRunning = false;		break;
-				default:									break;
-			} 		break;
-		default:	break;
+		switch (event.type) {
+			case SDL_QUIT:	isRunning = false;	break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym) {
+					case SDLK_ESCAPE:	isRunning = false;		break;
+					case SDLK_w:		if (dir != Direction::DOWN)
+											dir = Direction::UP;
+										break;
+					case SDLK_a:		if (dir != Direction::RIGHT)
+											dir = Direction::LEFT;
+										break;
+					case SDLK_s:		if (dir != Direction::UP)
+											dir = Direction::DOWN;
+										break;
+					case SDLK_d:		if ( dir != Direction::LEFT)
+											dir = Direction::RIGHT;
+										break;
+					default:			break;
+				}
+			break;
+			default:	break;
+		}
 	}
 	return isRunning;
 }

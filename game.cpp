@@ -61,9 +61,6 @@ void Game::updateLevelMap(){
 }
 
 bool Game::update(){
-	for( auto actualObj : window->GameObjectList){
-		actualObj->updatePosition();
-	}
 	int old_x = player->x;
 	int old_y = player->y;
 	Direction old_dir = player->dir;
@@ -71,5 +68,8 @@ bool Game::update(){
 	player->letPartsFollow(old_y, old_x, old_dir);
 	player->getImageByDirection();
 	updateLevelMap();
+	for( auto actualObj : window->GameObjectList){
+		actualObj->updatePosition();
+	}
 	return level.checkCollision(player);
 }
