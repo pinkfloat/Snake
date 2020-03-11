@@ -35,8 +35,21 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 }
 
 void Level::replaceApple( SnakeHead* player, GameObject* apple){
-	std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
-			apple->x = rand() % 21 + 1;
-			apple->y = rand() % 13 + 1;
-			//ToDo: Vermeiden, dass Apfel an Spielerposition spawnt
+	//Vermeiden, dass Apfel in der Schlange spawnt:
+	bool spawnInPlayer = false;
+	do{
+		spawnInPlayer = false;
+		std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
+		apple->x = rand() % 21 + 1;
+		apple->y = rand() % 13 + 1;
+		
+		if ((player->x == apple->x)&&(player->y == apple->y))
+			spawnInPlayer = true;
+		else{
+			for ( auto actualPart : player->Parts){
+				if ((actualPart->x == apple->x)&&(actualPart->y == apple->y))
+					spawnInPlayer = true;
+			}
+		}
+	} while (spawnInPlayer);
 }
