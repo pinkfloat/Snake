@@ -27,7 +27,7 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
 			player->addSnakePart(newPart);
 			//Apfel umplatzieren
-		
+			replaceApple(player, apple);
 		return true;
 	}
 	else

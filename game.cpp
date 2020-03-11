@@ -72,6 +72,6 @@ bool Game::update(){
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
-	printf("x = %d, y = %d\n", player->x, player->y);
+	//printf("x = %d, y = %d\n", player->x, player->y);
 	return level.checkCollision(player, apple, window);
 }

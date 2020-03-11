@@ -29,8 +29,11 @@ SnakePart::~SnakePart(){
 
 void SnakePart::getImageByDirection(){
 	switch(dir){
-		default:
-					imagePosition = TApple;	break;
+		case Direction::UP:		imagePosition = TUpDown;	break;
+		case Direction::RIGHT:	imagePosition = TLeftRight;	break;
+		case Direction::DOWN:	imagePosition = TUpDown;	break;
+		case Direction::LEFT:	imagePosition = TLeftRight;	break;
+		default: 				imagePosition = TApple;		break;
 	}
 }
 
@@ -102,12 +105,12 @@ void SnakeHead::addSnakePart( SnakePart* newPart){
 
 void SnakeHead::letPartsFollow( int old_y, int old_x, Direction old_dir){
 	for ( int i = Parts.size()-1; i >= 0; i--){
-			//Hinter vorangehendem Teil herlaufen
-			int j = i-1;
-			if (i > 0){
-				Parts[i]->y = Parts[j]->y;
-				Parts[i]->x = Parts[j]->x;
-				Parts[i]->dir = Parts[j]->dir;
+		//Hinter vorangehendem Teil herlaufen
+		int j = i-1;
+		if (i > 0){
+			Parts[i]->y = Parts[j]->y;
+			Parts[i]->x = Parts[j]->x;
+			Parts[i]->dir = Parts[j]->dir;
 			
 		}
 		//Hinter dem Kopf herlaufen
@@ -117,5 +120,6 @@ void SnakeHead::letPartsFollow( int old_y, int old_x, Direction old_dir){
 			Parts[i]->x = old_x;
 			Parts[i]->dir = old_dir;
 		}
+		Parts[i]->getImageByDirection();
 	}
 }
