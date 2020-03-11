@@ -30,8 +30,18 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 			replaceApple(player, apple);
 		return true;
 	}
-	else
+	else if ( field [player->x][player->y] == fieldCondition::WALL){
+		printf("Player crashes through wall\n");
 		return false;
+	}
+	else if ( field [player->x][player->y] == fieldCondition::SNAKE){
+		printf("Player ate himself\n");
+		return false;
+	}
+	else {
+		printf("Player managed to came to an uninitialized field aka wormhole\n");
+		return false;
+	}
 }
 
 void Level::replaceApple( SnakeHead* player, GameObject* apple){
