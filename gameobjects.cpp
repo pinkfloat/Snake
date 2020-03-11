@@ -33,32 +33,32 @@ void SnakePart::getBodyImage(){
 			switch(oldDir){
 				case Direction::UP:
 				case Direction::DOWN:	imagePosition = TUpDown; 	break;
-				case Direction::RIGHT:	imagePosition = TUpRight; 	break;
-				case Direction::LEFT:	imagePosition = TUpLeft; 	break;
+				case Direction::RIGHT:	imagePosition = TUpLeft;	break;
+				case Direction::LEFT:	imagePosition = TUpRight; 	break;
 			}
 		break;
 		case Direction::RIGHT:
 			switch(oldDir){
-				case Direction::UP:		imagePosition = TUpRight; 	break;
+				case Direction::UP:		imagePosition = TDownRight; break;
 				case Direction::RIGHT:
 				case Direction::LEFT:	imagePosition = TLeftRight;	break;
-				case Direction::DOWN:	imagePosition = TDownRight;	break;
+				case Direction::DOWN:	imagePosition = TUpRight;	break;
 			}
 		break;
 		case Direction::DOWN:
 			switch(oldDir){
 				case Direction::UP:
 				case Direction::DOWN:	imagePosition = TUpDown;	break;
-				case Direction::RIGHT:	imagePosition = TDownRight;	break;
-				case Direction::LEFT:	imagePosition = TLeftDown;	break;
+				case Direction::RIGHT:	imagePosition = TLeftDown;	break;
+				case Direction::LEFT:	imagePosition = TDownRight;	break;
 			}
 		break;
 		case Direction::LEFT:
 			switch(oldDir){
-				case Direction::UP:		imagePosition = TUpLeft;	break;
+				case Direction::UP:		imagePosition = TLeftDown;	break;
 				case Direction::RIGHT:
 				case Direction::LEFT:	imagePosition = TLeftRight;	break;
-				case Direction::DOWN:	imagePosition = TDownRight;	break;
+				case Direction::DOWN:	imagePosition = TUpLeft;	break;
 			}
 		break;
 		default: 						imagePosition = TApple;		break;
