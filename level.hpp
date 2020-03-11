@@ -1,6 +1,6 @@
 #pragma once
-#define level_width 22
-#define level_height 14
+#define level_width 23
+#define level_height 15
 
 #include "snakehead.hpp"
 

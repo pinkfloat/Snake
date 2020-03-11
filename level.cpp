@@ -7,9 +7,9 @@
 Level::Level(SnakeHead* player, GameObject* apple){
 	for ( int x = 0; x < level_width; x++){
 		for ( int y = 0; y < level_height; y++){
-			if ( ( x == 0) || ( x == level_width) ) //seitliche Spielfeldbegrenzung
+			if ( ( x == 0) || ( x == level_width - 1) ) //seitliche Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
-			else if ( ( y == 0) || ( y == level_height) ) //obere und untere Spielfeldbegrenzung
+			else if ( ( y == 0) || ( y == level_height - 1) ) //obere und untere Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
 		}
 	}
@@ -20,8 +20,8 @@ Level::~Level(){
 }
 
 void Level::updateMap(SnakeHead* player, GameObject* apple){
-	for ( int x = 1; x < level_width; x++){
-		for ( int y = 1; y < level_height; y++){
+	for ( int x = 1; x < level_width - 1; x++){
+		for ( int y = 1; y < level_height - 1; y++){
 			field[x][y] = fieldCondition::EMPTY;
 		}
 	}
@@ -36,15 +36,15 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 	if ( field [player->x][player->y] == fieldCondition::EMPTY)
 		return true;
 	else if (player->Parts.size() == level_width * level_height-1){
-			printf("Player won, but no one will ever notice...\n");
+		printf("Player won, but no one will ever notice...\n");
 		return false;
 	}		
 	else if ( field [player->x][player->y] == fieldCondition::APPLE){
-			//Schlange vergroeßern
-			SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
-			player->addSnakePart(newPart);
-			//Apfel umplatzieren
-			replaceApple(player, apple);
+		//Schlange vergroeßern
+		SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
+		player->addSnakePart(newPart);
+		//Apfel umplatzieren
+		replaceApple(player, apple);
 		return true;
 	}
 	else if ( field [player->x][player->y] == fieldCondition::WALL){
@@ -52,7 +52,7 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 		return false;
 	}
 	else if ( field [player->x][player->y] == fieldCondition::SNAKE){
-			printf("Player ate himself\n");
+		printf("Player ate himself\n");
 		return false;
 	}
 	else {
