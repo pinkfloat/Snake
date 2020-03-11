@@ -4,20 +4,31 @@
 
 #define maxRandomLoops 20
 
-Level::Level(){
+Level::Level(SnakeHead* player, GameObject* apple){
 	for ( int x = 0; x < level_width; x++){
 		for ( int y = 0; y < level_height; y++){
 			if ( ( x == 0) || ( x == level_width) ) //seitliche Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
 			else if ( ( y == 0) || ( y == level_height) ) //obere und untere Spielfeldbegrenzung
 				field[x][y] = fieldCondition::WALL;
-			else
-				field[x][y] = fieldCondition::EMPTY;
 		}
 	}
+	updateMap(player, apple);
 }
 
 Level::~Level(){
+}
+
+void Level::updateMap(SnakeHead* player, GameObject* apple){
+	for ( int x = 1; x < level_width; x++){
+		for ( int y = 1; y < level_height; y++){
+			field[x][y] = fieldCondition::EMPTY;
+		}
+	}
+	field[apple->x][apple->y] = fieldCondition::APPLE;
+	for ( auto SnakePart : player->Parts ){
+			field[SnakePart->x][SnakePart->y] = fieldCondition::SNAKE;
+	}
 }
 
 //Beendet Spiel bei Collision mit Wand oder Schlangenkoerper

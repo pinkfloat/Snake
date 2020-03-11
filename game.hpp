@@ -11,17 +11,17 @@ class Game {
 		~Game();
 		
 		bool isRunning;
-		Window* window;
-
-		Level level;
+		Window* window;			//Zum Spielfeld zeichnen
 
 		SnakeHead* player;
 		GameObject* apple;
+		Level* level;			//Spielfeldarray, beinhaltet Objektplatzierungen
 
 		SnakeHead* initializePlayer();
 		GameObject* initializeApple();
+		Level* initializeLevel();
 		void initializeGame();
 
-		void updateLevelMap();
-		bool update(); //Spiellogik voranbringen, alle non-Player game-objekte updaten
+		void updateLevelMap();	//Zum aktualisieren der Objektplatzierungen auf dem Spielfeld
+		bool update(); 			//Spiellogik voranbringen
 };

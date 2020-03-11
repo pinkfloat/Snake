@@ -12,9 +12,10 @@ class Level {
 
     public:
         fieldCondition field [level_width][level_height];
-        Level();
+        Level(SnakeHead* player, GameObject* apple);
         ~Level();
 
+        void updateMap(SnakeHead* player, GameObject* apple);
         bool checkCollision(SnakeHead* player, GameObject* apple, Window* window);
         void replaceApple (SnakeHead* player, GameObject* apple);
 };

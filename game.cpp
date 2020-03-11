@@ -15,8 +15,10 @@ Game::Game(){
 }
 
 Game::~Game(){
-	delete(apple);
+	delete(level);
 	delete(player);
+	delete(apple);
+	delete(window);
 	IMG_Quit();
 	SDL_Quit();
 	printf("Game cleaned!\n");
@@ -28,49 +30,32 @@ SnakeHead* Game::initializePlayer(){
 	SnakePart* part2 = new SnakePart(12, 12, Direction::RIGHT, window);
 	player->addSnakePart(part1);
 	player->addSnakePart(part2);
-
-	level.field[14][12] = fieldCondition::SNAKE;
-	level.field[13][12] = fieldCondition::SNAKE;
-	level.field[12][12] = fieldCondition::SNAKE;
-
 	return player;
 }
 
 GameObject* Game::initializeApple(){
-//ToDo: Random-File erstellen -> Funktion hier einfügen
 	apple = new GameObject(0,0,window);
-	level.replaceApple(player, apple);
-	level.field[6][6] = fieldCondition::APPLE;
+	level->replaceApple(player, apple);
 	return apple;
 }
 
-void Game::initializeGame(){
-	initializePlayer();
-	initializeApple();
+Level* Game::initializeLevel(){
+	return level = new Level(player, apple);
 }
 
-void Game::updateLevelMap(){
-	for ( int x = 1; x < level_width; x++){
-		for ( int y = 1; y < level_height; y++){
-			level.field[x][y] = fieldCondition::EMPTY;
-		}
-	}
-	for ( auto SnakePart : player->Parts ){
-			level.field[SnakePart->x][SnakePart->y] = fieldCondition::SNAKE;
-	}
-	level.field[apple->x][apple->y] = fieldCondition::APPLE;
+void Game::initializeGame(){
+	initializeApple();
+	initializePlayer();
+	initializeLevel();
 }
 
 bool Game::update(){
-	player->oldX = player->x;
-	player->oldY = player->y;
-	player->oldDir = player->dir;
 	player->moveForward();
 	player->letPartsFollow();
-	updateLevelMap();
+	level->updateMap(player, apple);
 	//printf("x = %d, y = %d\n", player->x, player->y); //TEST
 	for( auto actualObj : window->GameObjectList){
 		actualObj->updatePosition();
 	}
-	return level.checkCollision(player, apple, window);
+	return level->checkCollision(player, apple, window);
 }

@@ -129,6 +129,9 @@ bool SnakeHead::getKeyInput(){
 }
 
 void SnakeHead::moveForward(){
+	oldX = x;
+	oldY = y;
+	oldDir = dir;	
 	switch(dir){
 		case Direction::UP:		this->y -= 1;		break;
 		case Direction::RIGHT:	this->x += 1;		break;
