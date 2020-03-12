@@ -16,7 +16,6 @@ class GameObject {
 		SDL_Rect imagePosition;
 
 		GameObject(int x, int y, Window* window);
-		~GameObject();
 		
 		inline int calculatePixelPosition(int tile) { return tile * 64; }
 		void updatePosition();

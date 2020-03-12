@@ -61,6 +61,7 @@ void Window::draw() {
 	SDL_Rect mitte = {64, 64, 21*64, 13*64};
 	SDL_RenderFillRect(renderer, &mitte);
 
+	//Objekte (Schlange und Apfel) zeichnen
 	for (auto actualObj : this->GameObjectList) {
     	SDL_RenderCopy(renderer, snakeBMP, &actualObj->imagePosition, &actualObj->levelPosition);
 	}

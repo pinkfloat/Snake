@@ -11,9 +11,6 @@ GameObject::GameObject(int x, int y, Window* window)
 		window->addGameObject(this);
 }
 
-GameObject::~GameObject() {
-}
-
 void GameObject::updatePosition() {
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }

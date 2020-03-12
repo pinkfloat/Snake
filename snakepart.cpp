@@ -5,9 +5,6 @@ SnakePart::SnakePart(int partX, int partY, Direction dir, Window* window)
 : GameObject(partX, partY, window), dir(dir), oldDir(dir)
 {} 
 
-SnakePart::~SnakePart(){
-}
-
 void SnakePart::getBodyImage() {
 	switch(dir) {
 		case Direction::UP:		

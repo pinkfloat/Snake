@@ -16,9 +16,6 @@ Level::Level(SnakeHead* player, GameObject* apple) {
 	updateMap(player, apple);
 }
 
-Level::~Level() {
-}
-
 void Level::updateMap(SnakeHead* player, GameObject* apple) {
 	for (int x = 1; x < level_width - 1; x++) {
 		for (int y = 1; y < level_height - 1; y++) {
