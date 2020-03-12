@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include "gameobject.hpp"
 
+/* Als Snakepart werden, abgesehen vom Kopf, alle Elemente der Schlange betrachtet */
+
 class SnakePart : public GameObject {
 	public:
 		Direction dir, oldDir;

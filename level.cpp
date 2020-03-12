@@ -37,7 +37,7 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 		return false;
 	}		
 	else if (field[player->x][player->y] == fieldCondition::APPLE) {
-		//Schlange vergroeßern
+		//Schlange vergroessern
 		SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
 		player->addSnakePart(newPart);
 		//Apfel umplatzieren
@@ -61,7 +61,7 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 void Level::replaceApple(SnakeHead* player, GameObject* apple) {
 	bool spawnInPlayer;
 	int loops = 0;
-	std::srand(time(nullptr)); //aktuelle Zeit verwenden fuer Random-Generator
+	std::srand(time(nullptr)); //aktuelle Zeit verwenden in Random-Generator
 
 	do {
 		spawnInPlayer = false;	

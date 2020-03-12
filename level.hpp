@@ -4,6 +4,9 @@
 
 #include "snakehead.hpp"
 
+/* Level bildet das Spielfeld als Array ab und kennt
+die Positionen von Apfel, Schlange und die der Waende */
+
 enum class fieldCondition {
 	EMPTY, APPLE, SNAKE, WALL
 };

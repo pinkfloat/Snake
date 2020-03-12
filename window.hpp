@@ -4,6 +4,9 @@
 #include <vector>
 #include "gameobject.hpp"
 
+/* Window uebernimmt die Kommunikation mit SDL und ist
+verantwortlich fuer das Zeichnen der Spielelemente auf dem Screen */
+
 class Window {
 	public:
 		Window(const char* title, bool fullscreen);

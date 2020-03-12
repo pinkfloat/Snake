@@ -4,6 +4,9 @@
 #include "image.hpp"
 #include "level.hpp"
 
+/* Game dient der Initialisierung der Startwerte fuer Schlange, Apfel und Level
+und aktualisiert die Spiellogik in Geschwindigkeit der Framerate */
+
 class Game {
 	public:
 		Game();

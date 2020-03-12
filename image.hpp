@@ -2,6 +2,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+/* Positionen von Schlangenteilen und Apfel im Image */
+
 const SDL_Rect THeadUp = { 192, 0, 64, 64 };
 const SDL_Rect THeadRight = { 256, 0, 64, 64 };
 const SDL_Rect THeadLeft = { 192, 64, 64, 64 };

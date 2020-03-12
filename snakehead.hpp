@@ -4,6 +4,9 @@
 #include <vector>
 #include "snakepart.hpp"
 
+/* Der Kopf der Schlange wird vom Spieler gesteuert,
+er ist also folglich die eigentliche Spielfigur */
+
 class SnakeHead : public GameObject {
 	public:
 		std::vector<SnakePart*> Parts;
