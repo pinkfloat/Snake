@@ -8,12 +8,12 @@ GameObject::GameObject(int x, int y, Window* window)
 	imagePosition = TApple;
 	updatePosition();
 	if (window)
-		window->addGameObject( this );
+		window->addGameObject(this);
 }
 
-GameObject::~GameObject(){
+GameObject::~GameObject() {
 }
 
-void GameObject::updatePosition(){
+void GameObject::updatePosition() {
 	this->levelPosition = { calculatePixelPosition(x), calculatePixelPosition(y), 64, 64 };
 }

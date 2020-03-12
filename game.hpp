@@ -5,7 +5,6 @@
 #include "level.hpp"
 
 class Game {
-
 	public:
 		Game();
 		~Game();
@@ -20,7 +19,6 @@ class Game {
 		SnakeHead* initializePlayer();
 		GameObject* initializeApple();
 		Level* initializeLevel();
-		void initializeGame();
 
 		void updateLevelMap();	//Zum aktualisieren der Objektplatzierungen auf dem Spielfeld
 		bool update(); 			//Spiellogik voranbringen

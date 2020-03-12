@@ -1,43 +1,59 @@
 #include "window.hpp"
+#include <stdexcept>
 #define IMG_PATH "img/snake-graphics.bmp"
 
-Window::Window(const char* title, bool fullscreen){
+Window::Window(const char* title, bool fullscreen) {
     int flags = 0;
-	if(fullscreen)
+	if (fullscreen)
 		flags = SDL_WINDOW_FULLSCREEN;
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1472, 960, fullscreen);
 		
-	if(window)
-		printf("Window created!\n");
+	if (!window)
+		goto err0;
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	if(renderer)
-		printf("Renderer created!\n");
+	if (!renderer)
+		goto err1;
 
 	image = SDL_LoadBMP(IMG_PATH);
 	
-	if(!image)
-		fprintf(stderr, "Error loading %s, SDL Error: %p\n", IMG_PATH, SDL_GetError);
+	if (!image)
+		goto err2;
 
 	snakeBMP = SDL_CreateTextureFromSurface(renderer, image);
 	
-	if(!snakeBMP)
-		fprintf(stderr, "SDL_CreateTextureFromSurface() failed, SDL Error: %p\n", SDL_GetError());
+	if (!snakeBMP)
+		goto err3;
+
+	return;
+
+	err3:
+	SDL_FreeSurface(image);
+	image = NULL;
+	err2:
+	SDL_DestroyRenderer(renderer);
+	renderer = NULL;
+	err1:
+	SDL_DestroyWindow(window);
+	window = NULL;
+	err0:
+	throw std::runtime_error(SDL_GetError());
 }
 
-Window::~Window(){
+Window::~Window() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	SDL_FreeSurface(image);	
+	SDL_FreeSurface(image);
+	SDL_DestroyTexture(snakeBMP);
 }
 
-void Window::addGameObject( GameObject* newGameObject ){
-	this->GameObjectList.push_back( newGameObject );
+void Window::addGameObject(GameObject* newGameObject) {
+	this->GameObjectList.push_back(newGameObject);
 }
 
-void Window::draw(){
+void Window::draw() {
 	//Spielfeld mit Umrandung zeichnen
     SDL_SetRenderDrawColor(renderer, 0x1F, 0x1F, 0, 255);	//Rand: Braun
 	SDL_RenderClear(renderer);
@@ -45,9 +61,8 @@ void Window::draw(){
 	SDL_Rect mitte = {64, 64, 21*64, 13*64};
 	SDL_RenderFillRect(renderer, &mitte);
 
-	for( auto actualObj : this->GameObjectList ){
+	for (auto actualObj : this->GameObjectList) {
     	SDL_RenderCopy(renderer, snakeBMP, &actualObj->imagePosition, &actualObj->levelPosition);
 	}
-
 	SDL_RenderPresent(renderer);							//Gezeichnetes auf Screen bringen
 }

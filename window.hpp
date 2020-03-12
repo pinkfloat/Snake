@@ -5,9 +5,8 @@
 #include "gameobject.hpp"
 
 class Window {
-	
 	public:
-		Window (const char* title, bool fullscreen);
+		Window(const char* title, bool fullscreen);
 		~Window();
 
 		SDL_Window* window;
@@ -15,7 +14,7 @@ class Window {
 		SDL_Surface* image;
 		SDL_Texture* snakeBMP;
 
-		void addGameObject( GameObject* newGameObject );		
+		void addGameObject(GameObject* newGameObject);		
 		void draw();
 
 		std::vector<GameObject*> GameObjectList;

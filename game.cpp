@@ -1,19 +1,22 @@
 #include <cstdio>
+#include <stdexcept>
 #include "game.hpp"
 
-Game::Game(){
-	if( (SDL_Init(SDL_INIT_VIDEO) == 0) && (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)) ){
-		printf("Subsystem Initialised!\n");
+Game::Game() {
+	if (SDL_Init(SDL_INIT_VIDEO))
+		throw std::runtime_error(SDL_GetError());
 
-		this->window = new Window("Snake", false);
+	printf("Subsystem Initialised!\n");
 
-		this->isRunning = true;
-	}
-	else
-		this->isRunning = false;
+	this->window = new Window("Snake", false);
+	initializeApple();
+	initializePlayer();
+	initializeLevel();
+
+	this->isRunning = true;
 }
 
-Game::~Game(){
+Game::~Game() {
 	delete(level);
 	delete(player);
 	delete(apple);
@@ -23,7 +26,7 @@ Game::~Game(){
 	printf("Game cleaned!\n");
 }
 
-SnakeHead* Game::initializePlayer(){
+SnakeHead* Game::initializePlayer() {
 	player = new SnakeHead(14, 12, Direction::RIGHT, window);
 	SnakePart* part1 = new SnakePart(13, 12, Direction::RIGHT, window);
 	SnakePart* part2 = new SnakePart(12, 12, Direction::RIGHT, window);
@@ -32,28 +35,21 @@ SnakeHead* Game::initializePlayer(){
 	return player;
 }
 
-GameObject* Game::initializeApple(){
+GameObject* Game::initializeApple() {
 	apple = new GameObject(0,0,window);
 	level->replaceApple(player, apple);
 	return apple;
 }
 
-Level* Game::initializeLevel(){
+Level* Game::initializeLevel() {
 	return level = new Level(player, apple);
 }
 
-void Game::initializeGame(){
-	initializeApple();
-	initializePlayer();
-	initializeLevel();
-}
-
-bool Game::update(){
+bool Game::update() {
 	player->moveForward();
 	player->letPartsFollow();
 	level->updateMap(player, apple);
-	//printf("x = %d, y = %d\n", player->x, player->y); //TEST
-	for( auto actualObj : window->GameObjectList){
+	for (auto actualObj : window->GameObjectList) {
 		actualObj->updatePosition();
 	}
 	return level->checkCollision(player, apple, window);

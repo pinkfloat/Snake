@@ -5,9 +5,7 @@
 #include "snakepart.hpp"
 
 class SnakeHead : public GameObject {
-
 	public:
-
 		std::vector<SnakePart*> Parts;
 
 		int oldX, oldY;
@@ -19,6 +17,6 @@ class SnakeHead : public GameObject {
 		void getHeadImage();
 		bool getKeyInput();
 		void moveForward();
-		void addSnakePart ( SnakePart* newPart );
+		void addSnakePart(SnakePart* newPart);
 		void letPartsFollow();
 };

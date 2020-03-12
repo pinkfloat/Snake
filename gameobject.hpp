@@ -10,18 +10,14 @@ enum class Direction {
 };
 
 class GameObject {
-
 	public:
-		
 		int x, y;
 		SDL_Rect levelPosition;
 		SDL_Rect imagePosition;
 
-
 		GameObject(int x, int y, Window* window);
 		~GameObject();
 		
-		inline int calculatePixelPosition( int tile ) { return tile * 64; }
+		inline int calculatePixelPosition(int tile) { return tile * 64; }
 		void updatePosition();
-		
 };
