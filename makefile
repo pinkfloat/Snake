@@ -5,8 +5,8 @@ obj = $(src:.cpp=.o)
 
 CC=g++
 
-LDLIBS = `sdl2-config --cflags --libs` -lSDL2 -lSDL2main -lSDL2_image
-CFLAGS += -Wall -Wextra -pedantic-errors
+LDLIBS = `sdl2-config --cflags --libs` #-lasan
+CFLAGS += -Wall -Wextra -pedantic-errors #-fsanitize=address
 
 all: $(PROGRAMM)
 

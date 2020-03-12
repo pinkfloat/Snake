@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 /* GameObject dient der Erstellung des Apfels im Spiel und bildet
 die Basisklasse fuer die Koerperelemente und den Kopf der Schlange */

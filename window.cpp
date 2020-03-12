@@ -1,5 +1,6 @@
 #include "window.hpp"
 #include <stdexcept>
+
 #define IMG_PATH "img/snake-graphics.bmp"
 
 Window::Window(const char* title, bool fullscreen) {

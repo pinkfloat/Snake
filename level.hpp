@@ -1,8 +1,8 @@
 #pragma once
+#include "snakehead.hpp"
+
 #define level_width 23
 #define level_height 15
-
-#include "snakehead.hpp"
 
 /* Level bildet das Spielfeld als Array ab und kennt
 die Positionen von Apfel, Schlange und die der Waende */

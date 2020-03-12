@@ -21,7 +21,6 @@ Game::~Game() {
 	delete(player);
 	delete(apple);
 	delete(window);
-	IMG_Quit();
 	SDL_Quit();
 	printf("Game cleaned!\n");
 }

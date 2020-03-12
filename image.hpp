@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 /* Positionen von Schlangenteilen und Apfel im Image */
 
