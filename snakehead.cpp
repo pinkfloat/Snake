@@ -23,6 +23,7 @@ void SnakeHead::getHeadImage() {
 
 bool SnakeHead::getKeyInput() {
 	bool isRunning = true;
+	bool firstKeyInput = true;
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -30,17 +31,21 @@ bool SnakeHead::getKeyInput() {
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym) {
 					case SDLK_ESCAPE:	isRunning = false;	break;
-					case SDLK_w:		if (dir != Direction::DOWN)
+					case SDLK_w:		if (dir != Direction::DOWN && firstKeyInput)
 											dir = Direction::UP;
+										firstKeyInput = false;
 										break;
-					case SDLK_a:		if (dir != Direction::RIGHT)
+					case SDLK_a:		if (dir != Direction::RIGHT && firstKeyInput)
 											dir = Direction::LEFT;
+										firstKeyInput = false;
 										break;
-					case SDLK_s:		if (dir != Direction::UP)
+					case SDLK_s:		if (dir != Direction::UP && firstKeyInput)
 											dir = Direction::DOWN;
+										firstKeyInput = false;
 										break;
-					case SDLK_d:		if (dir != Direction::LEFT)
+					case SDLK_d:		if (dir != Direction::LEFT && firstKeyInput)
 											dir = Direction::RIGHT;
+										firstKeyInput = false;
 										break;
 					default:			break;
 				}
