@@ -1,3 +1,8 @@
+/*
+*   Copyright: (c) 2020 Sabrina Otto. All rights reserved.
+*   This work is licensed under the terms of the MIT license.
+*/
+
 #include <cstdlib>
 #include <ctime>
 #include "level.hpp"

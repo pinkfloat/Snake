@@ -1,4 +1,9 @@
-﻿#pragma once
+﻿/*
+*   Copyright: (c) 2020 Sabrina Otto. All rights reserved.
+*   This work is licensed under the terms of the MIT license.
+*/
+
+#pragma once
 #include "snakehead.hpp"
 #include "window.hpp"
 #include "image.hpp"

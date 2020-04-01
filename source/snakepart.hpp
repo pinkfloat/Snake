@@ -1,3 +1,8 @@
+/*
+*   Copyright: (c) 2020 Sabrina Otto. All rights reserved.
+*   This work is licensed under the terms of the MIT license.
+*/
+
 #pragma once
 #include <SDL2/SDL.h>
 #include "gameobject.hpp"
