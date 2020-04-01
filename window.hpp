@@ -3,8 +3,7 @@
 #include <vector>
 #include "gameobject.hpp"
 
-/* Window uebernimmt die Kommunikation mit SDL und ist
-verantwortlich fuer das Zeichnen der Spielelemente auf dem Screen */
+/* 'Window' communicates with the SDL-library and draws all game elements to the screen */
 
 class Window {
 	public:

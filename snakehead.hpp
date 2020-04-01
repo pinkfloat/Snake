@@ -3,8 +3,7 @@
 #include <vector>
 #include "snakepart.hpp"
 
-/* Der Kopf der Schlange wird vom Spieler gesteuert,
-er ist also folglich die eigentliche Spielfigur */
+/* 'SnakeHead' is controlled by player */
 
 class SnakeHead : public GameObject {
 	public:

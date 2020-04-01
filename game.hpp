@@ -4,8 +4,8 @@
 #include "image.hpp"
 #include "level.hpp"
 
-/* Game dient der Initialisierung der Startwerte fuer Schlange, Apfel und Level
-und aktualisiert die Spiellogik in Geschwindigkeit der Framerate */
+/* 'Game' initialises the start values for snake, apple and level
+   and refreshes game logic in speed of framerate */
 
 class Game {
 	public:
@@ -13,16 +13,16 @@ class Game {
 		~Game();
 		
 		bool isRunning;
-		Window* window;			//Zum Spielfeld zeichnen
+		Window* window;			//draws the game
 
 		SnakeHead* player;
 		GameObject* apple;
-		Level* level;			//Spielfeldarray, beinhaltet Objektplatzierungen
+		Level* level;			//the array where every object is placed in (snakes, apples, walls and empty spaces)
 
 		SnakeHead* initializePlayer();
 		GameObject* initializeApple();
 		Level* initializeLevel();
 
-		void updateLevelMap();	//Zum aktualisieren der Objektplatzierungen auf dem Spielfeld
-		bool update(); 			//Spiellogik voranbringen
+		void updateLevelMap();	//to refresh the placement of every object
+		bool update(); 			//pushes game forward
 };

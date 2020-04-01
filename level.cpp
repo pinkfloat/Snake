@@ -7,9 +7,9 @@
 Level::Level(SnakeHead* player, GameObject* apple) {
 	for (int x = 0; x < level_width; x++) {
 		for (int y = 0; y < level_height; y++) {
-			if (x == 0 || x == level_width - 1) //seitliche Spielfeldbegrenzung
+			if (x == 0 || x == level_width - 1) //lateral boundary
 				field[x][y] = fieldCondition::WALL;
-			else if (y == 0 || y == level_height - 1) //obere und untere Spielfeldbegrenzung
+			else if (y == 0 || y == level_height - 1) //upper and lower limit
 				field[x][y] = fieldCondition::WALL;
 		}
 	}
@@ -28,7 +28,7 @@ void Level::updateMap(SnakeHead* player, GameObject* apple) {
 	}
 }
 
-//Beendet Spiel bei Collision mit Wand oder Schlangenkoerper
+//Game ends if player has collision with wall or body
 bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window) {
 	if (field [player->x][player->y] == fieldCondition::EMPTY)
 		return true;
@@ -37,10 +37,10 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 		return false;
 	}		
 	else if (field[player->x][player->y] == fieldCondition::APPLE) {
-		//Schlange vergroessern
+		//resize snake
 		SnakePart* newPart = new SnakePart(player->x, player->y, player->dir, window);
 		player->addSnakePart(newPart);
-		//Apfel umplatzieren
+
 		replaceApple(player, apple);
 		return true;
 	}
@@ -61,14 +61,14 @@ bool Level::checkCollision( SnakeHead* player, GameObject* apple, Window* window
 void Level::replaceApple(SnakeHead* player, GameObject* apple) {
 	bool spawnInPlayer;
 	int loops = 0;
-	std::srand(time(nullptr)); //aktuelle Zeit verwenden in Random-Generator
+	std::srand(time(nullptr)); //use actual time in random generator
 
 	do {
 		spawnInPlayer = false;	
 		apple->x = rand() % 21 + 1;
 		apple->y = rand() % 13 + 1;
 
-		//Vermeiden, dass Apfel in der Schlange spawnt
+		//avoid that apple spawns in snake
 		if ((player->x == apple->x)&&(player->y == apple->y))
 			spawnInPlayer = true;
 		else {
@@ -80,7 +80,7 @@ void Level::replaceApple(SnakeHead* player, GameObject* apple) {
 		loops++;
 	} while (spawnInPlayer && loops < maxRandomLoops);
 
-	//Falls Random zu lange sucht
+	//if random needs too much time searching for an empty field
 	if (loops >= maxRandomLoops) {
 		for (int x = 0; x < level_width; x++) {
 			for (int y = 0; y < level_height; y++) {

@@ -4,8 +4,7 @@
 #define level_width 23
 #define level_height 15
 
-/* Level bildet das Spielfeld als Array ab und kennt
-die Positionen von Apfel, Schlange und die der Waende */
+/* 'Level' is the game screen as array where apple, snake and walls are placed in */
 
 enum class fieldCondition {
 	EMPTY, APPLE, SNAKE, WALL

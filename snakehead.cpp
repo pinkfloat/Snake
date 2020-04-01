@@ -75,21 +75,21 @@ void SnakeHead::addSnakePart(SnakePart* newPart) {
 
 void SnakeHead::letPartsFollow() {
 	for (int i = Parts.size()-1; i >= 0; i--) {
-		//Hinter vorangehendem Teil herlaufen
+		//follow the previous snakepart
 		int j = i-1;
 		if (i > 0) {
 			Parts[i]->y = Parts[j]->y;
 			Parts[i]->x = Parts[j]->x;
 			Parts[i]->oldDir = Parts[i]->dir;
 			Parts[i]->dir = Parts[j]->dir;
-			//Wenn Tail
+			//if tail
 			if (i == Parts.size()-1) {
 				Parts[i]->getTailImage();
 			}
 			else
 				Parts[i]->getBodyImage();
 		}
-		//Hinter dem Kopf herlaufen
+		//follow head
 		if (i == 0) {
 			Parts[i]->y = oldY;
 			Parts[i]->x = oldX;

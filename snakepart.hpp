@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include "gameobject.hpp"
 
-/* Als Snakepart werden, abgesehen vom Kopf, alle Elemente der Schlange betrachtet */
+/* Every element of the snake, except the head */
 
 class SnakePart : public GameObject {
 	public:

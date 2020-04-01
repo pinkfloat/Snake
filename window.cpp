@@ -55,16 +55,16 @@ void Window::addGameObject(GameObject* newGameObject) {
 }
 
 void Window::draw() {
-	//Spielfeld mit Umrandung zeichnen
-    SDL_SetRenderDrawColor(renderer, 0x1F, 0x1F, 0, 255);	//Rand: Braun
+	//draws border and centre
+    SDL_SetRenderDrawColor(renderer, 0x1F, 0x1F, 0, 255);	//edge: brown
 	SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 170, 255, 160, 255);	//Mitte: Gruen
+    SDL_SetRenderDrawColor(renderer, 170, 255, 160, 255);	//centre: green
 	SDL_Rect mitte = {64, 64, 21*64, 13*64};
 	SDL_RenderFillRect(renderer, &mitte);
 
-	//Objekte (Schlange und Apfel) zeichnen
+	//draws objects (apple and snake)
 	for (auto actualObj : this->GameObjectList) {
     	SDL_RenderCopy(renderer, snakeBMP, &actualObj->imagePosition, &actualObj->levelPosition);
 	}
-	SDL_RenderPresent(renderer);							//Gezeichnetes auf Screen bringen
+	SDL_RenderPresent(renderer);
 }

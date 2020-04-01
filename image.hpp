@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL2/SDL.h>
 
-/* Positionen von Schlangenteilen und Apfel im Image */
+/* positions of snake and apple in the loaded image */
 
 const SDL_Rect THeadUp = { 192, 0, 64, 64 };
 const SDL_Rect THeadRight = { 256, 0, 64, 64 };

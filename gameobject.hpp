@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include <SDL2/SDL.h>
 
-/* GameObject dient der Erstellung des Apfels im Spiel und bildet
-die Basisklasse fuer die Koerperelemente und den Kopf der Schlange */
+/* 'GameObject' is to create the apple in game and also
+	the base class of body parts and head of the snake */
 
 class Window;
 
-//Blickrichtung der Schlange
+//snake viewing direction
 enum class Direction {
 	UP, RIGHT, DOWN, LEFT
 };
