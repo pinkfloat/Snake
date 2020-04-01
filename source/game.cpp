@@ -13,7 +13,7 @@ Game::Game() {
 
 	printf("Subsystem Initialised!\n");
 
-	this->window = new Window("Snake", false);
+	this->window = new Window("Snake", true);
 	initializeApple();
 	initializePlayer();
 	initializeLevel();

@@ -7,13 +7,15 @@
 #include <stdexcept>
 
 #define IMG_PATH "../img/snake-graphics.bmp"
+#define SCREEN_HEIGHT 1472
+#define SCREEN_WIDTH   960
 
 Window::Window(const char* title, bool fullscreen) {
     int flags = 0;
 	if (fullscreen)
-		flags = SDL_WINDOW_FULLSCREEN;
+		flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1472, 960, fullscreen);
+	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_HEIGHT, SCREEN_WIDTH, fullscreen);
 		
 	if (!window)
 		goto err0;
@@ -22,6 +24,9 @@ Window::Window(const char* title, bool fullscreen) {
 
 	if (!renderer)
 		goto err1;
+
+	if (fullscreen)
+		SDL_RenderSetLogicalSize(renderer, SCREEN_HEIGHT, SCREEN_WIDTH);
 
 	image = SDL_LoadBMP(IMG_PATH);
 	
