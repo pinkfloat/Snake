@@ -8,7 +8,7 @@
 
 #define FRAMERATE 180
 
-int main ( ) try {
+int main (int argc, char* argv[]) try {
 	Game game;
 
 	for (;;) {
