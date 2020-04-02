@@ -7,3 +7,6 @@ The game resolution is 1472 x 960.
 All the source files are under the MIT-License, but the image is NOT.
 
 I've got the image from [rembound.com](https://rembound.com/articles/creating-a-snake-game-tutorial-with-html5)
+
+Here is an example what the game actualy looks like:
+![alt-text](https://github.com/pinkfloat/Snake/blob/master/img/snakeScreenshot.png "Screenshot example")
